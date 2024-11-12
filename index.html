@@ -69,13 +69,27 @@
         - Active state for press feedback
         - Smooth transitions for all changes
         */
+        /* 
+        BUTTON GRADIENT ENHANCEMENT
+        - Added to existing neo-button class
+        - Smooth transition for gradient changes
+        - Maintains neomorphic shadow effects
+        - Ensures text readability on gradients
+
+        Note: These properties work in conjunction with
+        the dynamic JavaScript gradient updates
+        */
         .neo-button {
             border-radius: 12px;
             transition: all 0.2s ease;
+            background-size: 200% 200%;
+            background-position: 0% 0%;
+            transition: all 0.3s ease-in-out;
         }
         
         .neo-button:hover {
             transform: translateY(-2px); /* Slight lift on hover */
+            background-position: 100% 100%;
         }
         
         .neo-button:active {
@@ -96,20 +110,66 @@
                        inset -5px -5px 10px #ffffff;
         }
 
-        /* 
-        GitHub Corner Animation:
-        - Playful wave effect on hover
-        - Custom keyframes for natural movement
-        - 560ms duration matches GitHub's style
-        */
-        .github-corner:hover .octo-arm {
-            animation: octocat-wave 560ms ease-in-out;
-        }
-        @keyframes octocat-wave {
-            0%, 100% { transform: rotate(0) }
-            20%, 60% { transform: rotate(-25deg) }
-            40%, 80% { transform: rotate(10deg) }
-        }
+        /* Add these to your style section */
+
+    /* 
+    GITHUB CORNER NEOMORPHIC
+    - Soft shadow effect matching theme
+    - Maintains visibility while adding depth
+    */
+    .github-corner svg {
+        filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.2))
+            drop-shadow(-3px -3px 5px rgba(255, 255, 255, 0.7));
+        transition: all 300ms ease-in-out;
+    }
+
+    .github-corner:hover svg {
+        filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.25))
+            drop-shadow(-4px -4px 8px rgba(255, 255, 255, 0.8));
+    }
+
+    /* 
+    TITLE GRADIENT NEOMORPHIC
+    - Softer gradient for better readability
+    - Neutral colors to maintain hierarchy
+    - Text shadow for subtle depth
+    - Maintains consistent neomorphic theme
+    - Dynamic gradient support
+    - High contrast ratio maintained
+    - Smooth transitions between states
+    - Enhanced readability with shadows
+
+
+    Design decisions:
+    1. Used neutral grays instead of bright colors
+    2. Reduced shadow intensity for subtlety
+    3. Maintained letter spacing for clarity
+    */
+    .neo-title {
+        background: linear-gradient(45deg, #dc2626, #ef4444);  /* Red gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7),
+                     -1px -1px 2px rgba(0, 0, 0, 0.1);
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease-in-out;
+    }
+
+
+    /* 
+    FOOTER NEOMORPHIC
+    - Subtle raised effect
+    - Light shadow to maintain elegance
+    - Semi-transparent background for depth
+    */
+    .neo-footer {
+        background: rgba(240, 240, 240, 0.8);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05),
+                    0 5px 15px rgba(255, 255, 255, 0.5);
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+    }
     </style>
 </head>
 
@@ -148,7 +208,7 @@ BODY STRUCTURE
         - Generous bottom margin
         - Dark gray for contrast
         -->
-        <h1 class="text-3xl font-bold mb-12 text-gray-800 text-center">Color Changing Button</h1>
+        <h1 class="text-3xl font-bold mb-12 text-center neo-title">Color Changing Button</h1>
         
         <!-- 
         BUTTON CONTAINER
@@ -193,7 +253,7 @@ BODY STRUCTURE
     - Pulsing heart animation
     - Interactive author link
     -->
-    <footer class="fixed bottom-0 w-full py-4 text-center bg-transparent">
+    <footer class="fixed bottom-0 w-full py-4 text-center neo-footer">
         <p class="text-gray-600">
             Made with <span class="text-red-500 animate-pulse">❤️</span> by 
             <a href="https://github.com/1yakub" id="authorName" class="font-medium color-transition hover:underline">
@@ -204,16 +264,42 @@ BODY STRUCTURE
 
     <script>
         /**
-         * COLOR CONFIGURATION
-         * Array of color objects containing:
-         * - name: Display name of color
-         * - hex: Hexadecimal color value
-         * - textClass: Tailwind class for text color
-         */
+        * COLOR CONFIGURATION
+        * Array of color objects containing:
+        * - name: Display name of color
+        * - hex: Base color for icons and text
+        * - textClass: Tailwind class for text styling
+        * - gradient: Custom gradient for enhanced visual appeal
+        * - gradient: Button gradient
+        * - titleGradient: High-contrast text gradient
+        * 
+        * Gradient Design Philosophy:
+        * - Uses paired light/dark shades of each color
+        * - 45-degree angle for dynamic feel
+        * - Maintains sufficient contrast with text
+        */
         const colors = [
-            { name: 'Red', hex: '#EF4444', textClass: 'text-red-500' },
-            { name: 'Green', hex: '#22C55E', textClass: 'text-green-500' },
-            { name: 'Blue', hex: '#3B82F6', textClass: 'text-blue-500' }
+            { 
+                name: 'Red', 
+                hex: '#EF4444', 
+                textClass: 'text-red-500',
+                gradient: 'linear-gradient(45deg, #EF4444, #f87171)',
+                titleGradient: 'linear-gradient(45deg, #dc2626, #ef4444)'  // Darker to normal red
+            },
+            { 
+                name: 'Green', 
+                hex: '#22C55E', 
+                textClass: 'text-green-500',
+                gradient: 'linear-gradient(45deg, #22C55E, #4ade80)',
+                titleGradient: 'linear-gradient(45deg, #15803d, #22c55e)'  // Darker to normal green
+            },
+            { 
+                name: 'Blue', 
+                hex: '#3B82F6', 
+                textClass: 'text-blue-500',
+                gradient: 'linear-gradient(45deg, #3B82F6, #60a5fa)',
+                titleGradient: 'linear-gradient(45deg, #1d4ed8, #3b82f6)'  // Darker to normal blue
+            }
         ];
 
         /**
@@ -234,27 +320,46 @@ BODY STRUCTURE
         const authorName = document.getElementById('authorName');
 
         /**
-         * COLOR CHANGE HANDLER
-         * - Cycles through colors array
-         * - Updates multiple elements:
-         *   1. Button background
-         *   2. Status text
-         *   3. GitHub icon
-         *   4. Author name
-         * - Maintains neomorphic shadows
-         */
+        * COLOR CHANGE HANDLER
+        * Enhanced version with gradient support
+        * Enhanced with title gradient updates
+        * - Updates all color-dependent elements
+        * - Maintains contrast ratios for accessibility
+        * - Syncs animations across components
+        * 
+        * Key features:
+        * - Cycles through color states
+        * - Updates multiple UI elements
+        * - Applies gradient backgrounds
+        * - Maintains neomorphic shadows
+        * 
+        * Update sequence:
+        * 1. Button gradient background
+        * 2. Status text color
+        * 3. GitHub icon color
+        * 4. Author name color
+        * 5. Shadow effects
+        */
         function changeColor() {
-            // Increment and wrap around
             currentColorIndex = (currentColorIndex + 1) % colors.length;
             const newColor = colors[currentColorIndex];
             
-            // Update visual elements
-            button.style.backgroundColor = newColor.hex;
+            // Update button with its gradient
+            button.style.background = newColor.gradient;
+            
+            // Update title with high-contrast gradient
+            const title = document.querySelector('.neo-title');
+            title.style.background = newColor.titleGradient;
+            title.style.webkitBackgroundClip = 'text';
+            title.style.backgroundClip = 'text';
+            title.style.color = 'transparent';
+            
+            // Update other elements
             colorText.innerHTML = `Current Color: <span class="${newColor.textClass} font-semibold">${newColor.name}</span>`;
             githubIcon.style.fill = newColor.hex;
             authorName.style.color = newColor.hex;
-
-            // Maintain neomorphic effect
+        
+            // Maintain neomorphic shadows
             button.style.boxShadow = `5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.7)`;
         }
 
