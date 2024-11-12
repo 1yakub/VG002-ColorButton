@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Changing Button</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 
+        ANIMATION STYLING
+        - Smooth transition for color changes
+        - 300ms provides good balance between responsive feel and visible transition
+        */
+        .color-transition {
+            transition: all 300ms ease-in-out;
+        }
+
+        /* 
+        BUTTON ANIMATION
+        - Scale effect on click for tactile feedback
+        - Quick duration for responsiveness
+        */
+        .btn-scale {
+            transition: transform 150ms ease;
+        }
+        .btn-scale:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<!-- 
+BODY STRUCTURE
+- Flex container for perfect centering
+- Light neutral background to focus attention on button
+- Min-height ensures full viewport coverage
+-->
+<body class="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+    <!-- 
+    MAIN CONTAINER
+    - Text center for consistent alignment
+    - Max-width prevents oversized container on large screens
+    -->
+    <div class="text-center max-w-md mx-auto p-8">
+        <!-- 
+        TITLE SECTION
+        - Semantic h1 for accessibility
+        - Margin bottom for spacing
+        -->
+        <h1 class="text-3xl font-bold mb-8 text-gray-800">Color Changing Button</h1>
+
+        <!-- 
+        BUTTON CONTAINER
+        - Flex container for button alignment
+        - Direction column for stacking elements
+        -->
+        <div class="flex flex-col items-center space-y-6">
+            <!-- 
+            MAIN BUTTON
+            - Initial red color state
+            - Large size for easy interaction
+            - Rounded corners for modern look
+            - Shadow for depth
+            - Color transition class for smooth changes
+            -->
+            <button 
+                id="colorButton"
+                class="color-transition btn-scale px-8 py-4 rounded-xl text-white text-lg font-semibold shadow-lg"
+                style="background-color: #EF4444;"
+            >
+                Click to Change Color
+            </button>
+
+            <!-- 
+            COLOR INDICATOR
+            - Shows current color name
+            - Updates with each click
+            - Helps with accessibility
+            -->
+            <p id="colorText" class="text-gray-600 font-medium">
+                Current Color: <span class="text-red-500 font-semibold">Red</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Color Configuration
+         * - Array of objects containing color information
+         * - Each object has:
+         *   - name: Display name of color
+         *   - hex: Hex code for the color
+         *   - textClass: Tailwind class for text color
+         */
+        const colors = [
+            { name: 'Red', hex: '#EF4444', textClass: 'text-red-500' },
+            { name: 'Green', hex: '#22C55E', textClass: 'text-green-500' },
+            { name: 'Blue', hex: '#3B82F6', textClass: 'text-blue-500' }
+        ];
+
+        /**
+         * State Management
+         * - Tracks current color index
+         * - Used to cycle through colors array
+         */
+        let currentColorIndex = 0;
+
+        /**
+         * DOM Elements
+         * - Get references to the elements we'll be manipulating
+         */
+        const button = document.getElementById('colorButton');
+        const colorText = document.getElementById('colorText');
+
+        /**
+         * Updates the button color and text
+         * - Cycles through colors array
+         * - Updates button background
+         * - Updates color name display
+         * - Implements circular rotation (returns to start after last color)
+         */
+        function changeColor() {
+            // Move to next color (cycle back to 0 if at end)
+            currentColorIndex = (currentColorIndex + 1) % colors.length;
+            
+            // Get the new color object
+            const newColor = colors[currentColorIndex];
+            
+            // Update button background color
+            button.style.backgroundColor = newColor.hex;
+            
+            // Update the color name display
+            colorText.innerHTML = `Current Color: <span class="${newColor.textClass} font-semibold">${newColor.name}</span>`;
+        }
+
+        /**
+         * Event Listeners
+         * - Add click handler to button
+         * - Could add keyboard support if needed
+         */
+        button.addEventListener('click', changeColor);
+    </script>
+</body>
+</html>
