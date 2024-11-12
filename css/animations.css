@@ -1,0 +1,45 @@
+/*************************************************
+ * ANIMATIONS AND TRANSITIONS
+ * 
+ * Comprehensive animation system for smooth interactions.
+ * All durations and timing functions are standardized
+ * for consistent user experience across the application.
+ * 
+ * Timing Philosophy:
+ * - Quick: 150ms (button presses)
+ * - Medium: 300ms (color changes)
+ * - Elaborate: 560ms (decorative animations)
+ *************************************************/
+
+/* 
+COLOR TRANSITION
+- 300ms: Long enough to be visible, short enough to feel responsive
+- ease-in-out: Natural acceleration and deceleration
+- Applied to all properties for smooth state changes
+*/
+.color-transition {
+    transition: all 300ms ease-in-out;
+}
+
+/* 
+GITHUB CORNER ANIMATION
+- Playful wave effect on hover
+- Duration matches GitHub's official animation
+- Adds personality without disrupting usability
+*/
+.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+}
+
+/* 
+WAVE ANIMATION KEYFRAMES
+- 0% & 100%: Rest position
+- 20% & 60%: Maximum negative rotation (-25deg)
+- 40% & 80%: Maximum positive rotation (10deg)
+- Creates natural waving motion
+*/
+@keyframes octocat-wave {
+    0%, 100% { transform: rotate(0) }
+    20%, 60% { transform: rotate(-25deg) }
+    40%, 80% { transform: rotate(10deg) }
+}

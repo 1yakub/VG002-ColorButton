@@ -1,0 +1,55 @@
+/*************************************************
+ * MAIN STYLES
+ * 
+ * Core styling and component-specific styles.
+ * Combines neomorphic design principles with
+ * modern web aesthetics and accessibility.
+ * 
+ * Design Principles:
+ * - Consistent spacing
+ * - Clear visual hierarchy
+ * - Accessible contrast ratios
+ * - Smooth interactions
+ *************************************************/
+
+/* 
+TITLE STYLING
+- Dynamic color changes with transitions
+- Text shadow adds subtle depth
+- Maintains readability on light background
+- Letter spacing improves legibility
+*/
+.neo-title {
+    color: #dc2626;  /* Initial red state */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7),
+                -1px -1px 2px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease-in-out;
+}
+
+/* 
+GITHUB CORNER ENHANCEMENT
+- Soft shadow effect matching theme
+- Smooth transition for color changes
+- Maintains visibility while adding depth
+*/
+.github-corner svg {
+    filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.2))
+            drop-shadow(-3px -3px 5px rgba(255, 255, 255, 0.7));
+    transition: all 300ms ease-in-out;
+}
+
+/* 
+FOOTER DESIGN
+- Semi-transparent background
+- Blur effect for modern look
+- Subtle shadow separation
+- Clean border for definition
+*/
+.neo-footer {
+    background: rgba(240, 240, 240, 0.8);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05),
+                0 5px 15px rgba(255, 255, 255, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}

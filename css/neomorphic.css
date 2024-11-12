@@ -1,0 +1,83 @@
+/*************************************************
+ * NEOMORPHIC DESIGN SYSTEM
+ * 
+ * A comprehensive implementation of the neomorphic design pattern.
+ * This system uses light and shadow to create a soft, modern UI 
+ * that appears to extrude from or be pressed into the background.
+ * 
+ * Color Philosophy:
+ * - Base color: #f0f0f0 (light neutral gray)
+ * - Shadows: Calculated darker/lighter variants
+ * - Contrast: Maintains WCAG accessibility standards
+ *************************************************/
+
+/* 
+BASE BACKGROUND
+- Neutral gray provides optimal shadow contrast
+- Soft enough to prevent eye strain
+- Works well with both light and dark elements
+*/
+.neo-bg {
+    background: #f0f0f0;
+}
+
+/* 
+CONTAINER COMPONENT
+- Raised effect achieved through dual shadows
+- Light shadow: top-left (simulates light source)
+- Dark shadow: bottom-right (simulates depth)
+- 20px radius: Soft corners for modern look
+- 60px spread: Creates subtle gradient effect
+*/
+.neo-container {
+    background: #f0f0f0;
+    border-radius: 20px;
+    box-shadow: 20px 20px 60px #cccccc,  /* Bottom-right shadow */
+                -20px -20px 60px #ffffff; /* Top-left light */
+}
+
+/* 
+BUTTON STYLING
+Primary interactive element
+- Smooth state transitions
+- Tactile feedback through transform
+- Maintains neomorphic depth on all states
+*/
+.neo-button {
+    border-radius: 12px;
+    transition: all 0.2s ease; /* Smooth state changes */
+}
+
+/* 
+HOVER STATE
+- Slight lift effect (2px up)
+- Indicates interactivity
+- Maintains shadow consistency
+*/
+.neo-button:hover {
+    transform: translateY(-2px);
+}
+
+/* 
+ACTIVE STATE
+- Press effect (1px down)
+- Provides click feedback
+- Quick transition for responsiveness
+*/
+.neo-button:active {
+    transform: translateY(1px);
+}
+
+/* 
+STATUS DISPLAY
+- Inset design for information hierarchy
+- Reversed shadow direction from container
+- Inner shadow creates "pressed in" look
+- Smaller radius for nested appearance
+*/
+.neo-display {
+    background: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: inset 5px 5px 10px #cccccc,   /* Inner shadow */
+                inset -5px -5px 10px #ffffff;  /* Inner light */
+}
