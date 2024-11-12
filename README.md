@@ -60,9 +60,9 @@ As a user, I want to click a button that changes its color, cycling through red,
 
 2. Open project directory
 
-```bash
-cd VG002-ColorButton
-
+    ```bash
+    cd VG002-ColorButton
+    ```
 
 3. Open `index.html` in your browser
 
