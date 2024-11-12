@@ -4,20 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color Changing Button</title>
+    <!-- 
+    EXTERNAL RESOURCES
+    Using Tailwind CSS via CDN for:
+    - Rapid prototyping
+    - Utility-first CSS
+    - Responsive design utilities
+    - Reduced need for custom CSS
+    -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Add GitHub icon from cdnjs -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
+        /* 
+        DESIGN SYSTEM & CUSTOM STYLES
+        
+        Core principles:
+        1. Soft shadows for depth
+        2. Light neutral backgrounds for contrast
+        3. Smooth transitions for interactivity
+        4. Layered elements for visual hierarchy
+        */
+
+        /* 
+        COLOR TRANSITION
+        - 300ms duration provides smooth yet responsive feel
+        - ease-in-out timing function for natural movement
+        - Applied to color changes to prevent jarring switches
+        */
         .color-transition {
             transition: all 300ms ease-in-out;
         }
-        .btn-scale {
-            transition: transform 150ms ease;
+        
+        /* 
+        NEOMORPHIC DESIGN SYSTEM
+        
+        Base Background:
+        - #f0f0f0 provides neutral gray backdrop
+        - Not pure white to allow for shadow contrast
+        - Soft enough to be easy on eyes
+        */
+        .neo-bg {
+            background: #f0f0f0;
         }
-        .btn-scale:active {
-            transform: scale(0.95);
+        
+        /* 
+        Main Container:
+        - Raised effect with dual shadows
+        - Light shadow on top-left (#ffffff)
+        - Dark shadow on bottom-right (#cccccc)
+        - 20px radius for soft corners
+        - 60px spread for gentle gradient
+        */
+        .neo-container {
+            background: #f0f0f0;
+            border-radius: 20px;
+            box-shadow: 20px 20px 60px #cccccc,
+                       -20px -20px 60px #ffffff;
         }
-        /* GitHub corner hover animation */
+        
+        /* 
+        Button Styling:
+        - Interactive states for better UX
+        - Hover lift effect for affordance
+        - Active state for press feedback
+        - Smooth transitions for all changes
+        */
+        .neo-button {
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        
+        .neo-button:hover {
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+        
+        .neo-button:active {
+            transform: translateY(1px); /* Press effect */
+        }
+
+        /* 
+        Status Display:
+        - Inset shadow for "sunken" effect
+        - Reversed shadow direction from container
+        - Smaller radius for nested appearance
+        - Inner shadow for depth perception
+        */
+        .neo-display {
+            background: #f0f0f0;
+            border-radius: 10px;
+            box-shadow: inset 5px 5px 10px #cccccc,
+                       inset -5px -5px 10px #ffffff;
+        }
+
+        /* 
+        GitHub Corner Animation:
+        - Playful wave effect on hover
+        - Custom keyframes for natural movement
+        - 560ms duration matches GitHub's style
+        */
         .github-corner:hover .octo-arm {
             animation: octocat-wave 560ms ease-in-out;
         }
@@ -28,8 +112,21 @@
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-    <!-- GitHub Corner -->
+
+<!-- 
+BODY STRUCTURE
+- Flex layout for perfect centering
+- Min-height ensures full viewport coverage
+- Neomorphic background sets the stage
+-->
+<body class="flex flex-col items-center justify-center min-h-screen neo-bg">
+    <!-- 
+    GITHUB CORNER
+    - Positioned absolutely in top-right
+    - SVG path for crisp rendering
+    - Interactive animation on hover
+    - Color syncs with button state
+    -->
     <a href="https://github.com/1yakub/VG002-ColorButton" class="github-corner" aria-label="View source on GitHub">
         <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true" id="githubIcon">
             <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -38,28 +135,67 @@
         </svg>
     </a>
 
-    <div class="text-center max-w-md mx-auto p-8">
-        <h1 class="text-3xl font-bold mb-8 text-gray-800">Color Changing Button</h1>
+    <!-- 
+    MAIN CONTAINER
+    - Width: 96 (24rem) for readability
+    - Padding: 12 (3rem) for comfortable spacing
+    - Max-width handling for responsiveness
+    -->
+    <div class="neo-container p-12 w-96 max-w-full mx-4">
+        <!-- 
+        HEADING
+        - Large, bold title
+        - Generous bottom margin
+        - Dark gray for contrast
+        -->
+        <h1 class="text-3xl font-bold mb-12 text-gray-800 text-center">Color Changing Button</h1>
         
-        <div class="flex flex-col items-center space-y-6">
+        <!-- 
+        BUTTON CONTAINER
+        - Flex column for vertical stacking
+        - Centered alignment
+        - Space between elements
+        -->
+        <div class="flex flex-col items-center space-y-8">
+            <!-- 
+            MAIN BUTTON
+            - Neomorphic styling
+            - Color transition enabled
+            - Initial red state
+            - Comfortable padding and text size
+            -->
             <button 
                 id="colorButton"
-                class="color-transition btn-scale px-8 py-4 rounded-xl text-white text-lg font-semibold shadow-lg"
+                class="neo-button color-transition px-8 py-4 w-64 text-white text-lg font-semibold shadow-lg"
                 style="background-color: #EF4444;"
             >
                 Click to Change Color
             </button>
 
-            <p id="colorText" class="text-gray-600 font-medium">
-                Current Color: <span class="text-red-500 font-semibold">Red</span>
-            </p>
+            <!-- 
+            COLOR DISPLAY
+            - Inset neomorphic effect
+            - Full width for balance
+            - Centered text
+            -->
+            <div class="neo-display px-6 py-3 w-full text-center">
+                <p id="colorText" class="text-gray-600 font-medium">
+                    Current Color: <span class="text-red-500 font-semibold">Red</span>
+                </p>
+            </div>
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- 
+    FOOTER
+    - Fixed to bottom
+    - Transparent background
+    - Pulsing heart animation
+    - Interactive author link
+    -->
     <footer class="fixed bottom-0 w-full py-4 text-center bg-transparent">
         <p class="text-gray-600">
-            Built with <span class="text-red-500 animate-pulse">❤</span> by 
+            Made with <span class="text-red-500 animate-pulse">❤️</span> by 
             <a href="https://github.com/1yakub" id="authorName" class="font-medium color-transition hover:underline">
                 Yakub Hossain
             </a>
@@ -67,36 +203,62 @@
     </footer>
 
     <script>
+        /**
+         * COLOR CONFIGURATION
+         * Array of color objects containing:
+         * - name: Display name of color
+         * - hex: Hexadecimal color value
+         * - textClass: Tailwind class for text color
+         */
         const colors = [
             { name: 'Red', hex: '#EF4444', textClass: 'text-red-500' },
             { name: 'Green', hex: '#22C55E', textClass: 'text-green-500' },
             { name: 'Blue', hex: '#3B82F6', textClass: 'text-blue-500' }
         ];
 
+        /**
+         * STATE MANAGEMENT
+         * Tracks current position in colors array
+         * Used for cycling through colors
+         */
         let currentColorIndex = 0;
 
+        /**
+         * DOM ELEMENT REFERENCES
+         * Cached for better performance
+         * Used across multiple functions
+         */
         const button = document.getElementById('colorButton');
         const colorText = document.getElementById('colorText');
         const githubIcon = document.getElementById('githubIcon');
         const authorName = document.getElementById('authorName');
 
+        /**
+         * COLOR CHANGE HANDLER
+         * - Cycles through colors array
+         * - Updates multiple elements:
+         *   1. Button background
+         *   2. Status text
+         *   3. GitHub icon
+         *   4. Author name
+         * - Maintains neomorphic shadows
+         */
         function changeColor() {
+            // Increment and wrap around
             currentColorIndex = (currentColorIndex + 1) % colors.length;
             const newColor = colors[currentColorIndex];
             
-            // Update button color
+            // Update visual elements
             button.style.backgroundColor = newColor.hex;
-            
-            // Update color text
             colorText.innerHTML = `Current Color: <span class="${newColor.textClass} font-semibold">${newColor.name}</span>`;
-            
-            // Update GitHub icon
             githubIcon.style.fill = newColor.hex;
-            
-            // Update author name color
             authorName.style.color = newColor.hex;
+
+            // Maintain neomorphic effect
+            button.style.boxShadow = `5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.7)`;
         }
 
+        // Event Listener
         button.addEventListener('click', changeColor);
     </script>
 </body>
