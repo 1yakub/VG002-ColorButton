@@ -53,3 +53,25 @@ FOOTER DESIGN
                 0 5px 15px rgba(255, 255, 255, 0.5);
     border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+/* 
+LOADING STATES
+- Visual feedback during transitions
+- Prevents multiple clicks
+- Smooth state changes
+*/
+.button-loading {
+    opacity: 0.7;
+    cursor: wait !important;
+    pointer-events: none;
+}
+
+@keyframes buttonPulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.button-loading {
+    animation: buttonPulse 1s infinite;
+}

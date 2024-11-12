@@ -1,82 +1,141 @@
 /*************************************************
  * MAIN APPLICATION LOGIC
+ * Enhanced with error handling and loading states
  * 
- * Core functionality handling:
- * - Color state management
- * - DOM interactions
- * - Event handling
- * - Visual updates
- * 
- * Architecture follows:
- * - Single responsibility principle
- * - Event-driven design
- * - Performant DOM manipulation
+ * Features added:
+ * - Error handling for color changes
+ * - Loading states during transitions
+ * - Fallback mechanisms
+ * - Better user feedback
  *************************************************/
 
 /**
  * STATE MANAGEMENT
- * Tracks the current position in the color cycle
- * @type {number}
+ * @type {number} - Tracks current color index
+ * @type {boolean} - Tracks button loading state
  */
 let currentColorIndex = 0;
+let isButtonLoading = false;
 
 /**
  * DOM ELEMENT REFERENCES
- * Cached for performance optimization
- * Only query the DOM once on initialization
+ * Cached for performance & error checking
  */
 const button = document.getElementById('colorButton');
 const colorText = document.getElementById('colorText');
 const githubIcon = document.getElementById('githubIcon');
 const authorName = document.getElementById('authorName');
 
-/**
- * COLOR CHANGE HANDLER
- * Manages the color transition process
- * 
- * Process:
- * 1. Updates color index
- * 2. Retrieves new color data
- * 3. Updates all affected elements
- * 4. Maintains neomorphic effects
- * 
- * Visual Updates:
- * - Button background
- * - Title color
- * - Status text
- * - GitHub icon
- * - Author name
- * 
- * Performance Considerations:
- * - Batches DOM updates
- * - Uses CSS transitions for smooth changes
- * - Maintains consistent shadow effects
- */
-function changeColor() {
-    // Cycle to next color with modulo for array bounds
-    currentColorIndex = (currentColorIndex + 1) % colors.length;
-    const newColor = colors[currentColorIndex];
-    
-    // Update primary button
-    button.style.backgroundColor = newColor.hex;
-    
-    // Update title with high-contrast variant
-    const title = document.querySelector('.neo-title');
-    title.style.color = newColor.titleColor;
-    
-    // Update status display
-    colorText.innerHTML = `Current Color: <span class="${newColor.textClass} font-semibold">${newColor.name}</span>`;
-    
-    // Update decorative elements
-    githubIcon.style.fill = newColor.hex;
-    authorName.style.color = newColor.hex;
-
-    // Maintain consistent neomorphic effect
-    button.style.boxShadow = `5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.7)`;
+// Verify all essential elements are present
+if (!button || !colorText || !githubIcon || !authorName) {
+    console.error('Essential DOM elements not found');
+    // Add visible error message if in development
+    if (process.env.NODE_ENV === 'development') {
+        document.body.innerHTML = '<h1>Error: Missing essential elements</h1>';
+    }
 }
 
 /**
- * EVENT LISTENERS
- * Sets up user interaction handling
+ * RESET TO DEFAULT STATE
+ * Fallback function for error recovery
+ * @returns {void}
  */
-button.addEventListener('click', changeColor);
+function resetToDefaultState() {
+    const defaultColor = {
+        hex: '#EF4444',
+        textClass: 'text-red-500',
+        titleColor: '#dc2626',
+        name: 'Red'
+    };
+    
+    try {
+        updateUIElements(defaultColor);
+        console.info('Reset to default state successful');
+    } catch (error) {
+        console.error('Failed to reset state:', error);
+    }
+}
+
+/**
+ * UPDATE UI ELEMENTS
+ * Centralized UI update function with error handling
+ * @param {Object} color - Color configuration object
+ * @throws {Error} If color object is invalid
+ * @returns {void}
+ */
+function updateUIElements(color) {
+    if (!color || !color.hex) {
+        throw new Error('Invalid color configuration');
+    }
+
+    try {
+        // Update button with loading state
+        button.classList.add('button-loading');
+        button.disabled = true;
+
+        // Batch UI updates
+        requestAnimationFrame(() => {
+            button.style.backgroundColor = color.hex;
+            button.style.boxShadow = `5px 5px 15px rgba(0, 0, 0, 0.2), 
+                                    -5px -5px 15px rgba(255, 255, 255, 0.7)`;
+            
+            const title = document.querySelector('.neo-title');
+            if (title) title.style.color = color.titleColor;
+
+            colorText.innerHTML = `Current Color: <span class="${color.textClass} font-semibold">
+                                    ${color.name}</span>`;
+            
+            githubIcon.style.fill = color.hex;
+            authorName.style.color = color.hex;
+
+            // Remove loading state after transition
+            setTimeout(() => {
+                button.classList.remove('button-loading');
+                button.disabled = false;
+            }, 300);
+        });
+
+    } catch (error) {
+        console.error('Error updating UI:', error);
+        resetToDefaultState();
+        throw error;
+    }
+}
+
+/**
+ * COLOR CHANGE HANDLER
+ * Enhanced with error handling and loading states
+ * @returns {void}
+ */
+function changeColor() {
+    if (isButtonLoading) return; // Prevent multiple clicks
+    
+    try {
+        isButtonLoading = true;
+        currentColorIndex = (currentColorIndex + 1) % colors.length;
+        
+        if (!colors[currentColorIndex]) {
+            throw new Error('Invalid color index');
+        }
+
+        updateUIElements(colors[currentColorIndex]);
+
+    } catch (error) {
+        console.error('Color change failed:', error);
+        resetToDefaultState();
+    } finally {
+        // Ensure button is re-enabled
+        setTimeout(() => {
+            isButtonLoading = false;
+            button.disabled = false;
+            button.classList.remove('button-loading');
+        }, 300);
+    }
+}
+
+// Event Listeners with error boundary
+try {
+    button.addEventListener('click', changeColor);
+} catch (error) {
+    console.error('Failed to add event listener:', error);
+}
