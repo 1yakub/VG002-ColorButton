@@ -128,32 +128,18 @@
             drop-shadow(-4px -4px 8px rgba(255, 255, 255, 0.8));
     }
 
-    /* 
-    TITLE GRADIENT NEOMORPHIC
-    - Softer gradient for better readability
-    - Neutral colors to maintain hierarchy
-    - Text shadow for subtle depth
-    - Maintains consistent neomorphic theme
-    - Dynamic gradient support
-    - High contrast ratio maintained
-    - Smooth transitions between states
-    - Enhanced readability with shadows
-
-
-    Design decisions:
-    1. Used neutral grays instead of bright colors
-    2. Reduced shadow intensity for subtlety
-    3. Maintained letter spacing for clarity
+        /* 
+    TITLE STYLING
+    - Solid colors for better readability
+    - Dynamic color changes
+    - Maintains contrast with background
     */
     .neo-title {
-        background: linear-gradient(45deg, #dc2626, #ef4444);  /* Red gradient */
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
+        color: #dc2626;  /* Red for initial contrast */
         text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7),
-                     -1px -1px 2px rgba(0, 0, 0, 0.1);
+                    -1px -1px 2px rgba(0, 0, 0, 0.1);
         letter-spacing: 0.5px;
-        transition: all 0.3s ease-in-out;
+        transition: color 0.3s ease-in-out;
     }
 
 
@@ -281,24 +267,21 @@ BODY STRUCTURE
         const colors = [
             { 
                 name: 'Red', 
-                hex: '#EF4444', 
+                hex: '#EF4444',            // Solid red
                 textClass: 'text-red-500',
-                gradient: 'linear-gradient(45deg, #EF4444, #f87171)',
-                titleGradient: 'linear-gradient(45deg, #dc2626, #ef4444)'  // Darker to normal red
+                titleColor: '#dc2626'      // Darker red for title contrast
             },
             { 
                 name: 'Green', 
-                hex: '#22C55E', 
+                hex: '#22C55E',            // Solid green
                 textClass: 'text-green-500',
-                gradient: 'linear-gradient(45deg, #22C55E, #4ade80)',
-                titleGradient: 'linear-gradient(45deg, #15803d, #22c55e)'  // Darker to normal green
+                titleColor: '#15803d'      // Darker green for title contrast
             },
             { 
                 name: 'Blue', 
-                hex: '#3B82F6', 
+                hex: '#3B82F6',            // Solid blue
                 textClass: 'text-blue-500',
-                gradient: 'linear-gradient(45deg, #3B82F6, #60a5fa)',
-                titleGradient: 'linear-gradient(45deg, #1d4ed8, #3b82f6)'  // Darker to normal blue
+                titleColor: '#1d4ed8'      // Darker blue for title contrast
             }
         ];
 
@@ -344,15 +327,12 @@ BODY STRUCTURE
             currentColorIndex = (currentColorIndex + 1) % colors.length;
             const newColor = colors[currentColorIndex];
             
-            // Update button with its gradient
-            button.style.background = newColor.gradient;
+            // Update button with solid color
+            button.style.backgroundColor = newColor.hex;
             
-            // Update title with high-contrast gradient
+            // Update title with solid color
             const title = document.querySelector('.neo-title');
-            title.style.background = newColor.titleGradient;
-            title.style.webkitBackgroundClip = 'text';
-            title.style.backgroundClip = 'text';
-            title.style.color = 'transparent';
+            title.style.color = newColor.titleColor;
             
             // Update other elements
             colorText.innerHTML = `Current Color: <span class="${newColor.textClass} font-semibold">${newColor.name}</span>`;
@@ -362,7 +342,6 @@ BODY STRUCTURE
             // Maintain neomorphic shadows
             button.style.boxShadow = `5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.7)`;
         }
-
         // Event Listener
         button.addEventListener('click', changeColor);
     </script>
