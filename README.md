@@ -10,6 +10,10 @@ A simple interactive web application that demonstrates DOM manipulation and even
 - Current color display indicator
 - Responsive design
 - Accessible color information
+- GitHub corner with dynamic color changes
+- Animated footer with pulsing heart
+- Interactive elements with hover effects
+- Color synchronization across components
 
 ## 🛠️ Technologies Used
 
