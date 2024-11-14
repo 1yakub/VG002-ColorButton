@@ -87,12 +87,13 @@ VG002-ColorButton/
 
 ## ✨ Code Highlights
 
-- Modular color configuration
+- Modular code organization
 - Smooth transitions using CSS
 - Neomorphic design implementation:
   - Layered shadows
   - Soft UI principles
   - Interactive states
+  - Non-selectable text for app-like feel
 - Accessible color information display
 - Clean, well-documented code
 - Responsive design principles
