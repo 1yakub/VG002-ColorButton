@@ -27,7 +27,10 @@ A modern, interactive web application showcasing neomorphic design principles wi
   - Tailwind CSS
   - Custom neomorphic styling
   - CSS transitions and animations
-- JavaScript (Vanilla)
+- JavaScript
+  - Modular organization
+  - Event handling
+  - DOM manipulation
 - Git & GitHub
 - Vercel (Deployment)
 
@@ -71,8 +74,15 @@ As a user, I want to click a button that changes its color, cycling through red,
 ```text
 VG002-ColorButton/
 │
-├── index.html          # Main HTML file with inline CSS and JavaScript
-└── README.md          # Project documentation
+├── css/
+│   ├── animations.css    # Animation and transition styles
+│   ├── neomorphic.css    # Neomorphic design system
+│   └── styles.css        # Core styles
+├── js/
+│   ├── colors.js         # Color configuration
+│   └── main.js          # Core functionality
+├── index.html           # Main HTML file
+└── README.md           # Project documentation
 ```
 
 ## ✨ Code Highlights
